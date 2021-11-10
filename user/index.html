@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <title>問題出題画面</title>
+    <style type="text/css">
+      .form {
+        margin: 0 auto;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form label {
+        margin-bottom: 3px;
+      }
+
+      .form input[type="text"],
+      .form input[type="number"],
+      .form textarea {
+        width: 100%; /*親要素いっぱい広げる*/
+        padding: 10px 15px; /*ボックスを大きくする*/
+        font-size: 16px;
+        border-radius: 3px; /*ボックス角の丸み*/
+        border: 2px solid #ddd; /*枠線*/
+        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+      }
+
+      .form .register,
+      .form .resize {
+        margin-top: 30px;
+        height: 50px;
+        width: 300px;
+        font-size: 30px;
+      }
+
+      .flex {
+        display: flex;
+      }
+
+      .flex :not(:last-child) {
+        margin-right: 8px;
+      }
+
+      .button {
+        display: inline-block;
+        width: 200px;
+        height: 54px;
+        text-align: center;
+        text-decoration: none;
+        line-height: 54px;
+        outline: none;
+      }
+
+      .button::before,
+      .button::after {
+        position: absolute;
+        z-index: -1;
+        display: block;
+        content: "";
+      }
+
+      .button,
+      .button::before,
+      .button::after {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+      }
+
+      .button {
+        background-color: #333;
+        color: #fff;
+      }
+
+      .button:hover {
+        background-color: #59b1eb;
+      }
+
+      .required::after {
+        content: "必須";
+        background-color: #f0ad4e;
+        color: #fff;
+        font-size: 12px;
+        font-weight: bold;
+        min-width: 10px;
+        padding: 3px 7px;
+        margin: 0px 5px;
+        line-height: 1;
+        vertical-align: middle;
+        white-space: nowrap;
+        text-align: center;
+        border-radius: 10px;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="result"></div>
+    <form action="" method="POST" class="form">
+      <label>問題文</label>
+      <h1>
+        wakayamaを10回表示するプログラムを作成せよ。ただし、wakayamaと1回表示したあとに改行すること
+      </h1>
+
+      <label>動作確認</label>
+      <iframe
+        src="https://paiza.io/projects/e/tKXBoPbsg3J4fhq5uttehg?theme=twilight"
+        width="100%"
+        height="500"
+        scrolling="no"
+        seamless="seamless"
+      ></iframe>
+      <label for="source" class="required">提出コード</label>
+      <textarea
+        placeholder="Paiza.ioまたはローカル開発環境で動作確認後、こちらに貼り付けること"
+        name=""
+        id="source"
+        cols="30"
+        rows="10"
+      ></textarea>
+      <button class="register" type="button" onclick="register()">提出</button>
+    </form>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+      let qid;
+      let rid;
+      let res_data = null;
+      const flag_show_result = true;
+
+      // pathに基づきサーバに問い合わせる
+      const origin = location.origin;
+      const path_base = location.pathname.replace(/\/[^\/]*$/, "");
+      const query = async (path) => {
+        let res = await axios.get(origin + path_base + path);
+
+        res_data = res.data;
+        if (flag_show_result) {
+          document.getElementById("result").innerHTML = JSON.stringify(res.data);
+        }
+      };
+
+      const endLineDeteler = (str) => {
+        //文字列の末尾の改行を削除
+        newstr = str;
+
+        while (newstr.endsWith("\n")) {
+          newstr = newstr.slice(0, newstr.length - 1);
+        }
+
+        return newstr;
+      };
+
+      const register = async () => {
+        let source = document.querySelector("#source").value;
+        source = endLineDeteler(source);
+
+        source = encodeURIComponent(source);
+
+        let queryString = `/submit_sourcecode?source=${source}`;
+
+        if (confirm("提出しますか?")) {
+          await query(queryString);
+          console.log(res_data);
+          alert(res_data["result"]);
+        }
+      };
+    </script>
+  </body>
+</html>
