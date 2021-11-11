@@ -93,6 +93,7 @@ if __name__ == "__main__":
                 "RuntimeError.c", "CompileError.c", "endlessloop.c", "dangerous.c"]
 
     for file in FileName:
+        file = "./testFile/" + file
         print(file + " test")
         print(compile(file))
         deleteBinary()
