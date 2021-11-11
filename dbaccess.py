@@ -12,7 +12,7 @@ def getCon():
 def main():
     conn = getCon()
     cur = conn.cursor()
-    cur.execute('SELECT tablename from pg_tables')
+    cur.execute('SELECT output from question')
     for row in cur:
         print(row)
     cur.close()

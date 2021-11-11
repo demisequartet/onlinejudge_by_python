@@ -25,5 +25,5 @@ CREATE TABLE submit (
 );
 
 INSERT INTO question (question_id, name, question_content,output, difficulty, basename, commentary) VALUES
-(1, 'wakayama repeat', 'wakayamaを10回表示するプログラムを作成せよ。ただし、wakayamaと1回表示したあとに改行すること','wakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\n' 'NONE', '', '');
+(1, 'wakayama repeat', 'wakayamaを10回表示するプログラムを作成せよ。ただし、wakayamaと1回表示したあとに改行すること','wakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\n','NONE', '', '');
 
