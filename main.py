@@ -9,6 +9,10 @@ app = Flask(__name__, static_folder='.', static_url_path='')
 def index():
     return app.send_static_file('user/index.html')
 
+@app.route('/choice', methods=['POST'])
+def choice():
+    return "a"
+
 
 @app.route('/submit_sourcecode', methods=['GET', 'POST'])
 def judge():
@@ -22,6 +26,12 @@ def judge():
     print(result)
 
     return jsonify({"result": result})
+
+@app.route('/getALLQuestion', methods=['GET', 'POST'])
+def getALLQuestion():
+    print("getALLQuestion")
+    
+
 
 
 app.run(port=8000, debug=True)
