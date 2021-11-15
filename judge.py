@@ -77,6 +77,8 @@ def answerJudge(stdout):
 
 
 def answerEndlineDeleter(str):
+    if len(str) == 0:
+        return str
     while str[-1] == "\n":
         str = str[:-1]
 

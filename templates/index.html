@@ -103,10 +103,12 @@
   <body>
     <div id="result"></div>
     <form action="" method="POST" class="form">
-      <label>問題文</label>
-      <h1>
-        wakayamaを10回表示するプログラムを作成せよ。ただし、wakayamaと1回表示したあとに改行すること
-      </h1>
+      <h1>問題名</h1>
+      <h1>{{question.name}}</h1>
+      <h2>問題文</h2>
+      <h2>{{question.question_content}}</h2>
+      <h3>出力例</h3>
+      <textarea cols="15" rows="15" readonly>{{question.output}}</textarea>
 
       <label>動作確認</label>
       <iframe

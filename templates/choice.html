@@ -62,7 +62,7 @@
       // グローバル変数（いくつかの関数内で参照・更新する）
       let sid = null;
       let res_data = null;
-      const flag_show_resdata = false; // res.dataを表示させるなら真(デバッグ用)
+      const flag_show_resdata = true; // res.dataを表示させるなら真(デバッグ用)
       const flag_show_by_table = true; // 問題選択をテーブルで表示させるなら真
       const flag_show_caution = false; // 学籍番号の確認メッセージを表示させるなら真
 
@@ -84,14 +84,8 @@
           let table = "<ul>";
           res_data.forEach((s) => {
             let line = "<li>";
-            line += `<a href="typing.html?id=${s.question_id}">` + s.name + "</a>";
-            if (s.cnt) {
-              if (s.cnt == "0") {
-                line += " (未実施)";
-              } else {
-                line += ` (${s.cnt}回実施、<a href="commentary.html?qid=${s.question_id}">解説へ</a>)`;
-              }
-            }
+            line += `<a href="/${s.question_id}">` + s.name + "</a>";
+            line += "</li>";
             table += line;
           });
           table += "</ul>";
@@ -109,20 +103,20 @@
                 ">": "&gt;",
               }[match];
             });
-            const flag_untyped = !s.cnt || s.cnt == "0";
+            // const flag_untyped = !s.cnt || s.cnt == "0";
             let line = "<tr>";
             line += `<td>${sname}</td>`;
-            if (flag_untyped) {
-              line += "<td>未実施</td>";
-            } else {
-              line += `<td>${s.cnt}回実施</td>`;
-            }
-            line += `<td><button onclick="location.href='typing.html?id=${s.question_id}'">Go!</button></td>`;
-            if (flag_untyped) {
-              line += "<td>&nbsp;</td>";
-            } else {
-              line += `<td><button onclick="location.href='commentary.html?qid=${s.question_id}'">解説</button></td>`;
-            }
+            // if (flag_untyped) {
+            //   line += "<td>未実施</td>";
+            // } else {
+            //   line += `<td>${s.cnt}回実施</td>`;
+            // }
+            line += `<td><button onclick="location.href='/${s.question_id}'">Go!</button></td>`;
+            // if (flag_untyped) {
+            //   line += "<td>&nbsp;</td>";
+            // } else {
+            //   line += `<td><button onclick="location.href='commentary.html?qid=${s.question_id}'">解説</button></td>`;
+            // }
             line += "</tr>";
             table += line;
           });
@@ -133,60 +127,10 @@
 
       // すべての問題を表示する
       const showQuestion = async () => {
-        await query("/showsort?tab=question");
+        await query("/getALLQuestions");
         showQuestionForChoice();
       };
-      //showQuestion();
-
-      // 学籍番号をクッキーから読み出す
-      // 設定されていないときは，トップページに戻る確認画面を表示する
-      const getsid = () => {
-        document.cookie.split(/; */).forEach((s) => {
-          const v = s.split(/=/);
-          if (v[0] == "sid") {
-            sid = v[1];
-          }
-        });
-        if (!sid) {
-          if (
-            window.confirm(
-              "学籍番号を設定していません。トップページに戻りますか？\n（キャンセルを押すと解答がサーバに記録されません。）"
-            )
-          ) {
-            location.href = "top.html";
-          }
-        }
-      };
-      //getsid();
-
-      // 学籍番号をクッキーから読み出す
-      // (設定されていないときは，トップページに戻る確認画面を表示する)
-      // すべての問題を表示する
-      const getsidAndshowQuestion = async () => {
-        document.cookie.split(/; */).forEach((s) => {
-          const v = s.split(/=/);
-          if (v[0] == "sid") sid = v[1];
-        });
-        if (sid == null) {
-          if (
-            window.confirm(
-              "学籍番号を設定していません。トップページに戻りますか？\n（キャンセルを押すと解答がサーバに記録されません。）"
-            )
-          ) {
-            location.href = "top.html";
-          }
-        } else {
-          await query("/showsid?sid=" + sid);
-          showQuestionForChoice();
-
-          if (flag_show_caution) {
-            const e = document.getElementById("caution");
-            e.innerHTML += `【ご確認ください】学籍番号は <span style="font-weight: bold">${sid}</span> で合っていますか?<br>間違っている場合には、<a href="top.html">トップページ</a>で設定し直してください。`;
-            e.style.display = "block";
-          }
-        }
-      };
-      getsidAndshowQuestion();
+      showQuestion();
     </script>
   </body>
 </html>

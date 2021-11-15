@@ -32,6 +32,19 @@ def getCorrectOutput(question_id: int):
     conn.close()
 
 
+def getQuestion(num: int) -> dict:
+    conn = getCon()
+    cur = conn.cursor(cursor_factory=DictCursor)
+    cur.execute('SELECT * from question where question_id = {}'.format(num))
+
+    res = dict(cur.fetchone())
+
+    cur.close()
+    conn.close()
+
+    return res
+
+
 def getALLQuestions() -> dict:
     conn = getCon()
     cur = conn.cursor(cursor_factory=DictCursor)
@@ -61,5 +74,5 @@ def main():
 if __name__ == "__main__":
     # main()
     # getCorrectOutput(1)
-    res = getALLQuestions()
-    print(dumps(res))
+    res = getQuestion(1)
+    print(res)
