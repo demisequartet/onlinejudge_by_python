@@ -20,13 +20,21 @@ def choice():
 @app.route('/submit_sourcecode', methods=['GET', 'POST'])
 def judge():
     print("judge")
-    source = request.args.get('source')
-    source = urllib.parse.unquote(source)
-    print(source)
+    encodedSource = request.args.get('source')
+    studentID = request.args.get('studentID')
+    source = urllib.parse.unquote(encodedSource)
+
+    # print(studentID)
 
     result = main(source)
+    encodedResult = urllib.parse.quote(result)
 
-    print(result)
+    # print(result)
+
+    questionID = 1
+
+    dbaccess.registerSource(studentID, questionID,
+                            encodedSource, "a")
 
     return jsonify({"result": result})
 

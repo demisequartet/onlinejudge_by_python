@@ -60,19 +60,26 @@ def getALLQuestions() -> dict:
     return dict_result
 
 
+def registerSource(student_id: int, question_id: int, result: str, source: str):
+    conn = getCon()
+    cur = conn.cursor()
+    cur.execute("INSERT INTO submit(student_id,question_id,result,source) VALUES (%s,%s,%s,%s)",
+                (student_id, question_id, result, source,))
+
+    conn.commit()  # https://www.psycopg.org/docs/connection.html?highlight=commit#connection.commit
+    cur.close()
+    conn.close()
+
+
 def main():
     conn = getCon()
     cur = conn.cursor()
-    cur.execute('SELECT output from question')
-    for row in cur:
-        print(row[0])
-        print(type(row[0]))
+    cur.execute('SELECT * FROM submit')
+    print(cur.fetchall())
     cur.close()
     conn.close()
 
 
 if __name__ == "__main__":
-    # main()
-    # getCorrectOutput(1)
-    res = getQuestion(1)
-    print(res)
+    registerSource(1, 1, "a", "b")
+    main()

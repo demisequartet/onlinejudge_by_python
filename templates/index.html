@@ -118,6 +118,8 @@
         scrolling="no"
         seamless="seamless"
       ></iframe>
+      <label for="studentID">学籍番号</label>
+      <input type="text" name="studentID" id="studentID" class="required" />
       <label for="source" class="required">提出コード</label>
       <textarea
         placeholder="Paiza.ioまたはローカル開発環境で動作確認後、こちらに貼り付けること"
@@ -161,11 +163,12 @@
 
       const register = async () => {
         let source = document.querySelector("#source").value;
+        let studentID = document.querySelector("#studentID").value;
         source = endLineDeteler(source);
-
         source = encodeURIComponent(source);
+        studentID = studentID == "" ? 0 : studentID;
 
-        let queryString = `/submit_sourcecode?source=${source}`;
+        let queryString = `/submit_sourcecode?studentID=${studentID}&source=${source}`;
 
         if (confirm("提出しますか?")) {
           await query(queryString);

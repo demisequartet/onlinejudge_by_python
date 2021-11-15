@@ -16,7 +16,7 @@ CREATE TABLE submit (
    student_id   int  NOT NULL,
    question_id  int  NOT NULL,
    result       text NOT NULL,
-   note         TEXT DEFAULT '',
+   source       text NOT NULL,
 
    PRIMARY KEY (response_id),
    FOREIGN KEY (question_id)
