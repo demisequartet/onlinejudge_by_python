@@ -51,6 +51,21 @@
         }
       };
 
+      const replaceSpecialCharacter = (str) => {
+        newstr = str.replace(/[&'"<>\n]/g, function (match) {
+          return {
+            "&": "&amp;",
+            "'": "&#039;",
+            '"': "&quot;",
+            "<": "&lt;",
+            ">": "&gt;",
+            "\n": "<br>",
+          }[match];
+        });
+
+        return newstr;
+      };
+
       const makeTable = () => {
         table = "<table border='1'><thead><tr>";
         tbodyContents = Object.keys(res_data[0]).map((key) => {
@@ -65,7 +80,7 @@
         res_data.forEach((submit) => {
           table += "<tr>";
           tbodyContents = Object.keys(submit).map((key) => {
-            return `<td>${submit[key]}</td>`;
+            return `<td>${replaceSpecialCharacter(String(submit[key]))}</td>`;
           });
 
           table += tbodyContents.join("");
