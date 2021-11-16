@@ -2,6 +2,7 @@ from json import dumps
 import psycopg2
 import os
 from psycopg2.extras import DictCursor
+import urllib.parse
 
 print(psycopg2.apilevel)
 
@@ -84,15 +85,22 @@ def registerSource(student_id: int, question_id: int, result: str, source: str):
     conn.close()
 
 
-def main():
+def getALLsubmit():
     conn = getCon()
-    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory=DictCursor)
     cur.execute('SELECT * FROM submit')
-    print(cur.fetchall())
+    submits = []
+
+    for i in cur:
+        submits.append(dict(i))
+
+    cur.close()
     cur.close()
     conn.close()
+
+    return submits
 
 
 if __name__ == "__main__":
     # registerSource(1, 1, "a", "b")
-    main()
+    print(getALLsubmit())

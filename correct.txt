@@ -1,10 +1,1 @@
-okayama
-okayama
-okayama
-okayama
-okayama
-okayama
-okayama
-okayama
-okayama
-okayama
+Hello,World!

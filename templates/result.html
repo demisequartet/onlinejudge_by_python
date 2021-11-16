@@ -9,14 +9,35 @@
     <style type="text/css"></style>
   </head>
   <body>
+    <h1>提出結果</h1>
+
     <div id="result"></div>
+
+    <!-- <table border="1">
+      <thead>
+        <tr>
+          {% for key in submits[0] %}
+          <th>{{key}}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for submit in submits %}
+        <tr>
+          {% for key in submit %}
+          <td>{{submit[key]}}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table> -->
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
       let qid;
       let rid;
       let res_data = null;
-      const flag_show_result = true;
+      const flag_show_result = false;
 
       // pathに基づきサーバに問い合わせる
       const origin = location.origin;
@@ -29,6 +50,41 @@
           document.getElementById("result").innerHTML = JSON.stringify(res.data);
         }
       };
+
+      const makeTable = () => {
+        table = "<table border='1'><thead><tr>";
+        tbodyContents = Object.keys(res_data[0]).map((key) => {
+          return `<th>${key}</th>`;
+        });
+
+        table += tbodyContents.join("");
+        table += "</tr>";
+        table += "</thead>";
+        table += "<tbody>";
+
+        res_data.forEach((submit) => {
+          table += "<tr>";
+          tbodyContents = Object.keys(submit).map((key) => {
+            return `<td>${submit[key]}</td>`;
+          });
+
+          table += tbodyContents.join("");
+          table += "</tr>";
+        });
+        table += "</tbody>";
+        table += "</table>";
+
+        return table;
+      };
+
+      const getALLsubmits = async () => {
+        await query("/getALLsubmits");
+
+        table = makeTable();
+
+        document.querySelector("#result").innerHTML = table;
+      };
+      getALLsubmits();
     </script>
   </body>
 </html>
