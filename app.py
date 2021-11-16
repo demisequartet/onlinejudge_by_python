@@ -17,24 +17,27 @@ def choice():
     return render_template('choice.html')
 
 
+@app.route('/result', methods=['POST', 'GET'])
+def result():
+    return render_template('result.html')
+
+
 @app.route('/submit_sourcecode', methods=['GET', 'POST'])
 def judge():
     print("judge")
+    questionID = int(request.args.get('questionID'))
     encodedSource = request.args.get('source')
     studentID = request.args.get('studentID')
     source = urllib.parse.unquote(encodedSource)
 
-    # print(studentID)
+    dbaccess.outputTofile(questionID)
 
     result = main(source)
     encodedResult = urllib.parse.quote(result)
 
     # print(result)
-
-    questionID = 1
-
     dbaccess.registerSource(studentID, questionID,
-                            encodedSource, "a")
+                            encodedSource, encodedResult)
 
     return jsonify({"result": result})
 

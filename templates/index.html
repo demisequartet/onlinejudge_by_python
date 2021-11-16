@@ -41,6 +41,12 @@
         display: flex;
       }
 
+      .column {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+      }
+
       .flex :not(:last-child) {
         margin-right: 8px;
       }
@@ -98,26 +104,37 @@
         border-radius: 10px;
         display: inline-block;
       }
+
+      .outputExample {
+        height: 500px;
+      }
     </style>
   </head>
   <body>
     <div id="result"></div>
     <form action="" method="POST" class="form">
+      <div id="questionID" style="display: none">{{question.question_id}}</div>
       <h1>問題名</h1>
       <h1>{{question.name}}</h1>
       <h2>問題文</h2>
       <h2>{{question.question_content}}</h2>
-      <h3>出力例</h3>
-      <textarea cols="15" rows="15" readonly>{{question.output}}</textarea>
-
-      <label>動作確認</label>
-      <iframe
-        src="https://paiza.io/projects/e/tKXBoPbsg3J4fhq5uttehg?theme=twilight"
-        width="100%"
-        height="500"
-        scrolling="no"
-        seamless="seamless"
-      ></iframe>
+      <div class="flex">
+        <div class="column">
+          <label>出力例</label>
+          <textarea class="outputExample" cols="15" rows="15" readonly>
+{{question.output}}</textarea
+          >
+        </div>
+        <div class="column">
+          <label>動作確認</label>
+          <iframe
+            src="https://paiza.io/projects/e/tKXBoPbsg3J4fhq5uttehg?theme=twilight"
+            height="500"
+            scrolling="no"
+            seamless="seamless"
+          ></iframe>
+        </div>
+      </div>
       <label for="studentID">学籍番号</label>
       <input type="text" name="studentID" id="studentID" class="required" />
       <label for="source" class="required">提出コード</label>
@@ -162,13 +179,14 @@
       };
 
       const register = async () => {
+        let questionID = document.querySelector("#questionID").textContent;
         let source = document.querySelector("#source").value;
         let studentID = document.querySelector("#studentID").value;
         source = endLineDeteler(source);
         source = encodeURIComponent(source);
         studentID = studentID == "" ? 0 : studentID;
 
-        let queryString = `/submit_sourcecode?studentID=${studentID}&source=${source}`;
+        let queryString = `/submit_sourcecode?questionID=${questionID}&studentID=${studentID}&source=${source}`;
 
         if (confirm("提出しますか?")) {
           await query(queryString);

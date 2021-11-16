@@ -12,6 +12,19 @@ def getCon():
     return psycopg2.connect(DATABASE_URL)
 
 
+def outputTofile(num):
+    conn = getCon()
+    cur = conn.cursor()
+    cur.execute('SELECT output from question where question_id = {}'.format(num))
+    output = cur.fetchone()[0]
+    cur.close()
+    conn.close()
+
+    print(output)
+
+    strToFile(output)
+
+
 def strToFile(str):
     if os.path.exists("correct.txt"):
         os.remove("correct.txt")
@@ -81,5 +94,5 @@ def main():
 
 
 if __name__ == "__main__":
-    registerSource(1, 1, "a", "b")
+    # registerSource(1, 1, "a", "b")
     main()
