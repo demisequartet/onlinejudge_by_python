@@ -27,7 +27,7 @@ CREATE TABLE submit (
 INSERT INTO question (question_id, name, question_content,output, difficulty, basename, commentary) VALUES
 (1, 'HELLO WORLD', 'Hello,World!を出力するプログラムを作成せよ。末尾の改行の有無は問わない',E'Hello,World!\n','NONE', '', '');
 INSERT INTO question (question_id, name, question_content,output, difficulty, basename, commentary) VALUES
-(2, 'wakayama repeat', 'wakayamaを10回表示するプログラムを作成せよ。ただし、wakayamaと1回表示したあとに改行すること',E'wakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\n','NONE', '', '');
+(2, 'wakayama repeat', '出力例のように、wakayamaを10回表示するプログラムを作成せよ。',E'wakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\nwakayama\n','NONE', '', '');
 INSERT INTO question (question_id, name, question_content,output, difficulty, basename, commentary) VALUES
 (3, 'okayama repeat', 'okayamaを10回表示するプログラムを作成せよ。ただし、okayamaと1回表示したあとに改行すること',E'okayama\nokayama\nokayama\nokayama\nokayama\nokayama\nokayama\nokayama\nokayama\nokayama\n','NONE', '', '');
 INSERT INTO question (question_id, name, question_content,output, difficulty, basename, commentary) VALUES

@@ -16,7 +16,7 @@ def getCon():
 def outputTofile(num):
     conn = getCon()
     cur = conn.cursor()
-    cur.execute('SELECT output from question where question_id = {}'.format(num))
+    cur.execute('SELECT output from question where question_id = %s', (num,))
     output = cur.fetchone()[0]
     cur.close()
     conn.close()
@@ -38,7 +38,7 @@ def getCorrectOutput(question_id: int):
     conn = getCon()
     cur = conn.cursor()
     cur.execute(
-        'SELECT output from question where question_id = {}'.format(question_id))
+        'SELECT output from question where question_id = %s', (question_id,))
     for row in cur:
         print(row[0])
         print(type(row[0]))
@@ -49,7 +49,7 @@ def getCorrectOutput(question_id: int):
 def getQuestion(num: int) -> dict:
     conn = getCon()
     cur = conn.cursor(cursor_factory=DictCursor)
-    cur.execute('SELECT * from question where question_id = {}'.format(num))
+    cur.execute('SELECT * from question where question_id = %s', (num,))
 
     res = dict(cur.fetchone())
 

@@ -13,25 +13,6 @@
 
     <div id="result"></div>
 
-    <!-- <table border="1">
-      <thead>
-        <tr>
-          {% for key in submits[0] %}
-          <th>{{key}}</th>
-          {% endfor %}
-        </tr>
-      </thead>
-      <tbody>
-        {% for submit in submits %}
-        <tr>
-          {% for key in submit %}
-          <td>{{submit[key]}}</td>
-          {% endfor %}
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table> -->
-
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
       let qid;
@@ -52,7 +33,7 @@
       };
 
       const replaceSpecialCharacter = (str) => {
-        newstr = str.replace(/[&'"<>\n]/g, function (match) {
+        newstr = str.replace(/[&'"<>\n \t]/g, function (match) {
           return {
             "&": "&amp;",
             "'": "&#039;",
@@ -60,9 +41,10 @@
             "<": "&lt;",
             ">": "&gt;",
             "\n": "<br>",
+            " ": "&nbsp;",
+            "\t": "&nbsp;&nbsp;&nbsp;&nbsp;",
           }[match];
         });
-
         return newstr;
       };
 
