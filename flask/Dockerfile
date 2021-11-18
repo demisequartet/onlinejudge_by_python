@@ -10,7 +10,7 @@ COPY ./dbaccess.py /app
 COPY ./judge.py /app
 COPY ./app.py /app
 
-RUN pip install flask psycopg2-binary
+RUN pip install flask psycopg2-binary waitress
 
 
 
