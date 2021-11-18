@@ -1,6 +1,3 @@
-#please access http://localhost:8080/choice
-
-
 version: "3"
 services:
   db:
