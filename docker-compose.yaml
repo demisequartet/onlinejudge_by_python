@@ -1,3 +1,6 @@
+#please access http://localhost:8080/choice
+
+
 version: "3"
 services:
   db:
@@ -15,3 +18,12 @@ services:
       DATABASE_HOST: localhost
     volumes:
       - ./db:/docker-entrypoint-initdb.d
+
+  flask:
+    build:
+      context: .
+      dockerfile: ./flask/Dockerfile
+    container_name: flask-container
+    ports:
+      - "21345:8000"
+

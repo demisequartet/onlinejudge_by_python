@@ -6,7 +6,8 @@ import urllib.parse
 
 print(psycopg2.apilevel)
 
-DATABASE_URL = "postgresql://postgres:Password@localhost:5432/db"
+# DATABASE_URL = "postgresql://postgres:Password@localhost:5432/db"
+DATABASE_URL = "postgresql://postgres:Password@db-container:5432/db"
 
 
 def getCon():

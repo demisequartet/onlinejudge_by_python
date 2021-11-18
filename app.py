@@ -59,4 +59,7 @@ def getALLQuestions():
     return jsonify(dbaccess.getALLQuestions())
 
 
-app.run(port=8000, debug=True)
+# https://qiita.com/ekzemplaro/items/2766618ba5968ee62b70
+# host='0.0.0.0' でないとdockerで動かした際に、host側で見ることができない
+# threaded = true 同時アクセス制御
+app.run(host='0.0.0.0', port=8000, debug=False, threaded=True)
