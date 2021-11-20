@@ -52,7 +52,9 @@ def judge():
     dbaccess.registerSource(studentID, questionID,
                             result, source)
 
-    return jsonify({"result": result})
+    resID = dbaccess.getResponseID(studentID, questionID, result, source)
+
+    return jsonify({"result": result, "responseID": resID})
 
 
 @ app.route('/getALLQuestions', methods=['GET', 'POST'])

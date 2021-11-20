@@ -109,14 +109,37 @@
         height: 500px;
         width: 100%;
       }
+
+      details {
+        border: 1px solid #aaa;
+        border-radius: 4px;
+        padding: 0.5em 0.5em 0;
+      }
+
+      summary {
+        font-weight: bold;
+        margin: -0.5em -0.5em 0;
+        padding: 0.5em;
+      }
     </style>
   </head>
   <body>
     <div id="result"></div>
     <form action="" method="POST" class="form">
+      <details>
+        <summary>注意書き</summary>
+        paiza.ioは使用しなくても解答できます。
+        paiza.ioを使用した場合でも、プログラムを提出コードに貼り付けてください。
+        <br />
+        日本語文字は一切使用しないでください。とくに全角空白は、paiza.ioでは半角
+        空白扱いですが、オンラインジャッジではコンパイルエラーになります。
+        <br />
+        「実行(Ctrl-Enter)」ボタンのすぐ下に、マウスカーソルを移動させて、上下
+        にドラッグすると、出力欄を伸び縮みできます。
+      </details>
       <div id="questionID" style="display: none">{{question.question_id}}</div>
-      <h1>問題名</h1>
-      <h1>{{question.name}}</h1>
+      <!-- <h1>問題名</h1>
+      <h1>{{question.name}}</h1> -->
       <h2>問題文</h2>
       <h2>{{question.question_content}}</h2>
       <div class="flex">
@@ -137,7 +160,7 @@
         </div>
       </div>
       <label for="studentID" class="required">学生番号</label>
-      <input type="text" name="studentID" id="studentID" class="required" />
+      <input type="text" name="studentID" id="studentID" class="required" maxlength="9" />
       <label for="source" class="required">提出コード</label>
       <textarea
         placeholder="Paiza.ioまたはローカル開発環境で動作確認後、こちらに貼り付けること"
@@ -154,7 +177,7 @@
       let qid;
       let rid;
       let res_data = null;
-      const flag_show_result = true;
+      const flag_show_result = false;
 
       // pathに基づきサーバに問い合わせる
       const origin = location.origin;
@@ -179,6 +202,11 @@
         return newstr;
       };
 
+      //整数ならtrueを返す正規表現を用いた関数
+      const isInt = (str) => {
+        return /^[0-9]+$/.test(str);
+      };
+
       const register = async () => {
         let questionID = document.querySelector("#questionID").textContent;
         let source = document.querySelector("#source").value;
@@ -191,12 +219,19 @@
           return;
         }
 
+        if (!isInt(studentID)) {
+          alert("学生番号は整数で入力してください");
+          return;
+        }
+
         let queryString = `/submit_sourcecode?questionID=${questionID}&studentID=${studentID}&source=${source}`;
 
         if (confirm("提出しますか?")) {
           await query(queryString);
           console.log(res_data);
-          alert(res_data["result"]);
+          let res = `${res_data["result"]}(${res_data["responseID"]})`;
+          console.log(res);
+          alert(res);
         }
       };
     </script>

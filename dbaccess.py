@@ -96,10 +96,20 @@ def getALLsubmit():
         submits.append(dict(i))
 
     cur.close()
-    cur.close()
     conn.close()
 
     return submits
+
+
+def getResponseID(studentID, questionID, result, source):
+    conn = getCon()
+    cur = conn.cursor(cursor_factory=DictCursor)
+    cur.execute('SELECT response_id FROM submit WHERE student_id = %s AND question_id = %s AND result = %s AND source = %s',
+                (studentID, questionID, result, source))
+    res = cur.fetchone()
+    cur.close()
+    conn.close()
+    return dict(res)["response_id"]
 
 
 if __name__ == "__main__":
