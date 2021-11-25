@@ -66,8 +66,9 @@ def getALLQuestions():
 # host='0.0.0.0' でないとdockerで動かした際に、host側で見ることができない
 # threaded = true 同時アクセス制御
 
-# development
-#app.run(host='0.0.0.0', port=8000, debug=False, threaded=True)
+development = True
 
-# production
-serve(app, host='0.0.0.0', port=8000)
+if development:
+    app.run(host='0.0.0.0', port=8000, debug=False, threaded=True)
+else:
+    serve(app, host='0.0.0.0', port=8000)
