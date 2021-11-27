@@ -65,10 +65,9 @@ def getALLQuestions():
 # https://qiita.com/ekzemplaro/items/2766618ba5968ee62b70
 # host='0.0.0.0' でないとdockerで動かした際に、host側で見ることができない
 # threaded = true 同時アクセス制御
-
 development = True
 
 if development:
-    app.run(host='0.0.0.0', port=8000, debug=False, threaded=True)
+    app.run(host='0.0.0.0', port=8000, debug=True, threaded=True)
 else:
     serve(app, host='0.0.0.0', port=8000)
