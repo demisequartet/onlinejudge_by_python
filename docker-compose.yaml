@@ -15,6 +15,7 @@ services:
       DATABASE_HOST: localhost
     volumes:
       - ./db:/docker-entrypoint-initdb.d
+      - ./temp:/temp
 
   flask:
     build:

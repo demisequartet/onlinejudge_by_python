@@ -1,0 +1,9 @@
+docker ps してコンテナのIDを知る
+
+docker exec -it コンテナID bin/bash
+
+
+su - postgres
+cd /
+cd temp
+psql db < 2021.....
