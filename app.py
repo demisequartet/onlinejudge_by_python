@@ -10,7 +10,7 @@ app = Flask(__name__, static_folder='.', static_url_path='')
 @app.route('/question/<int:questionID>', methods=['GET', 'POST'])
 def question(questionID):
     questionInfo = dbaccess.getQuestion(questionID)
-    return render_template('index.html', question=questionInfo)
+    return render_template('index.html', question=questionInfo) if questionInfo else f'<h1>Question {questionID} not found</h1>'
 
 
 @app.route('/choice', methods=['POST', 'GET'])

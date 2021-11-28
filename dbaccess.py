@@ -52,7 +52,9 @@ def getQuestion(num: int) -> dict:
     cur = conn.cursor(cursor_factory=DictCursor)
     cur.execute('SELECT * from question where question_id = %s', (num,))
 
-    res = dict(cur.fetchone())
+    res = cur.fetchone()
+
+    res = dict(res) if res else None
 
     cur.close()
     conn.close()
