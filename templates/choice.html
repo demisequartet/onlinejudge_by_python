@@ -84,7 +84,7 @@
           let table = "<ul>";
           res_data.forEach((s) => {
             let line = "<li>";
-            line += `<a href="/${s.question_id}">` + s.name + "</a>";
+            line += `<a href="../question/${s.question_id}">` + s.name + "</a>";
             line += "</li>";
             table += line;
           });
@@ -111,7 +111,7 @@
             // } else {
             //   line += `<td>${s.cnt}回実施</td>`;
             // }
-            line += `<td><button onclick="location.href='/${s.question_id}'">Go!</button></td>`;
+            line += `<td><button onclick="location.href='../question/${s.question_id}'">Go!</button></td>`;
             // if (flag_untyped) {
             //   line += "<td>&nbsp;</td>";
             // } else {

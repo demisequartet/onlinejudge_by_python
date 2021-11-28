@@ -7,8 +7,8 @@ import urllib.parse
 app = Flask(__name__, static_folder='.', static_url_path='')
 
 
-@app.route('/<int:questionID>', methods=['GET', 'POST'])
-def index(questionID):
+@app.route('/question/<int:questionID>', methods=['GET', 'POST'])
+def question(questionID):
     questionInfo = dbaccess.getQuestion(questionID)
     return render_template('index.html', question=questionInfo)
 
@@ -49,10 +49,10 @@ def judge():
 
     # print(result)
     # source = source.replace('\n', '<br>')
-    dbaccess.registerSource(studentID, questionID,
-                            result, source)
+    resID = dbaccess.registerSource(studentID, questionID,
+                                    result, source)
 
-    resID = dbaccess.getResponseID(studentID, questionID, result, source)
+    # resID = dbaccess.getResponseID(studentID, questionID, result, source)
 
     return jsonify({"result": result, "responseID": resID})
 
