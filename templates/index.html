@@ -189,7 +189,7 @@
       const origin = location.origin;
       const path_base = location.pathname.replace(/\/[^\/]*$/, "");
       const query = async (path) => {
-        let res = await axios.get(origin + path_base + path);
+        let res = await axios.get(origin + path);
 
         res_data = res.data;
         if (flag_show_result) {
