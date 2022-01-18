@@ -5,7 +5,7 @@ from psycopg2.extras import DictCursor
 import urllib.parse
 import csv
 
-print(psycopg2.apilevel)
+# print(psycopg2.apilevel)
 
 DATABASE_URL = "postgresql://postgres:Password@localhost:5432/db"
 # DATABASE_URL = "postgresql://postgres:Password@db-container:5432/db"
@@ -167,8 +167,56 @@ def makeCSV():
             writer.writerow(i)
 
 
+def ansanalyzer():
+    submits = getALLsubmit()
+
+    student_ids = set()
+
+    for submit in submits:
+        student_ids.add(submit["student_id"])
+
+    res = []
+
+    for id in student_ids:
+        tempres = {"id": id, "Accepted": 0,
+                   "Wrong Answer": 0, "Compile Error": 0}
+        for submit in submits:
+            if submit["student_id"] == id:
+                if submit["result"] == "Accepted":
+                    tempres["Accepted"] += 1
+                elif submit["result"] == "Wrong Answer":
+                    tempres["Wrong Answer"] += 1
+                elif submit["result"] == "Compile Error":
+                    tempres["Compile Error"] += 1
+        res.append(tempres)
+
+    ac, wa = 0, 0
+
+    for i in res:
+        if i["Accepted"] != 0:
+            ac += 1
+        else:
+            wa += 1
+
+    print(ac, wa)
+    print(ac/(ac+wa))
+    res.sort(key=lambda x: x["Accepted"])
+
+    superaccepter, notsuperaccepter = [], []
+
+    for i in res:
+        if i["Accepted"] != 0:
+            if i["Wrong Answer"] + i["Compile Error"] == 0:
+                superaccepter.append(i["id"])
+            else:
+                notsuperaccepter.append(i["Wrong Answer"] + i["Compile Error"])
+    print(len(superaccepter))
+    print(sum(notsuperaccepter)/len(notsuperaccepter))
+
+
 if __name__ == "__main__":
-    AcceptedSourceAnalyzer()
-    CompileErrorSourceAnalyzer()
-    WrongAnswerAnalyzer()
+    # AcceptedSourceAnalyzer()
+    # CompileErrorSourceAnalyzer()
+    # WrongAnswerAnalyzer()
     # makeCSV()
+    ansanalyzer()
