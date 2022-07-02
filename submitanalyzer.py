@@ -214,9 +214,57 @@ def ansanalyzer():
     print(sum(notsuperaccepter)/len(notsuperaccepter))
 
 
+def crossAnalyzer():
+    f = open("studentnum.txt", "r")
+
+    data = f.read()
+
+    numdata = data.split("\n")
+
+    students = list(map(int, numdata))
+
+    # print(students)
+
+    submits = getALLsubmit()
+
+    # print(submits)
+
+    for student in students:
+        ac, wa = [], []
+        for submit in submits:
+            if submit["student_id"] == student:
+                if submit["result"] == "Accepted":
+                    ac.append(submit)
+                else:
+                    wa.append(submit)
+
+        if len(ac) == 0 and len(wa) == 0:
+            print(f'{student} data Not Found')
+            continue
+
+        if len(ac) == 0:
+            wa.sort(key=lambda x: x["response_id"])
+            res = wa[-1]["result"]
+            if res == "Compile Error":
+                print(f'{student} コンパイルエラー')
+            else:
+                print(f'{student} 出力ミス')
+        else:
+            ac.sort(key=lambda x: x["response_id"])
+
+            source = ac[0]["source"]
+
+            if "for" in source:
+                print(f'{student} for文を使った正解')
+            elif "while" in source:
+                print(f'{student} while文を使った正解')
+            else:
+                print(f'{student} printf10回使った正解')
+
+
 if __name__ == "__main__":
     # AcceptedSourceAnalyzer()
     # CompileErrorSourceAnalyzer()
     # WrongAnswerAnalyzer()
     # makeCSV()
-    ansanalyzer()
+    crossAnalyzer()
