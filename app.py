@@ -7,6 +7,11 @@ import urllib.parse
 app = Flask(__name__, static_folder='.', static_url_path='')
 
 
+@app.route('/top', methods=['GET', 'POST'])
+def top():
+    return render_template('top.html')
+
+
 @app.route('/question/<int:questionID>', methods=['GET', 'POST'])
 def question(questionID):
     questionInfo = dbaccess.getQuestion(questionID)
