@@ -39,13 +39,17 @@ def getALLsubmits():
     return contents
 
 
-@ app.route('/submit_sourcecode', methods=['GET', 'POST'])
+@ app.route('/submit_sourcecode', methods=['POST'])
 def judge():
     print("judge")
-    questionID = int(request.args.get('questionID'))
-    encodedSource = request.args.get('source')
-    studentID = request.args.get('studentID')
+    questionID = int(request.form['questionID'])
+    encodedSource = request.form['source']
+    studentID = request.form['studentID']
     source = urllib.parse.unquote(encodedSource)
+
+    print("questionID: ", questionID)
+    print("source: ", source)
+    print("studentID: ", studentID)
 
     dbaccess.outputTofile(questionID)
 

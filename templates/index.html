@@ -197,6 +197,16 @@
         }
       };
 
+      const queryByPOST = async (path, param) => {
+        console.log("url: " + origin + path);
+        console.log({ param });
+        let res = await axios.post(origin + path, param);
+        res_data = res.data;
+        if (flag_show_result) {
+          document.getElementById("result").innerHTML = JSON.stringify(res.data);
+        }
+      };
+
       const endLineDeteler = (str) => {
         //文字列の末尾の改行を削除
         newstr = str;
@@ -230,10 +240,14 @@
           return;
         }
 
-        let queryString = `/submit_sourcecode?questionID=${questionID}&studentID=${studentID}&source=${source}`;
+        // let queryString = `/submit_sourcecode?questionID=${questionID}&studentID=${studentID}&source=${source}`;
+
+        let path = "/submit_sourcecode";
+        let param = `questionID=${questionID}&studentID=${studentID}&source=${source}`;
 
         if (confirm("提出しますか?")) {
-          await query(queryString);
+          // await query(queryString);
+          await queryByPOST(path, param);
           console.log(res_data);
           let res = `${res_data["result"]}(${res_data["responseID"]})`;
           console.log(res);
