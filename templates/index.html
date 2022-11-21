@@ -141,6 +141,10 @@
             「実行(Ctrl-Enter)」ボタンのすぐ下に、マウスカーソルを移動させて、上下
             にドラッグすると、出力欄を伸び縮みできます。
           </li>
+          <li>
+            本オンラインジャッジシステムでは、英字の大小や綴りの間違いが1文字でもあると不正解となります。
+            (例: "Hello"を出力する問題の場合、"hello"を出力すると不正解。)
+          </li>
         </ul>
       </details>
       <div id="questionID" style="display: none">{{question.question_id}}</div>
@@ -228,7 +232,7 @@
         let source = document.querySelector("#source").value;
         let studentID = document.querySelector("#studentID").value;
         source = endLineDeteler(source);
-        source = encodeURIComponent(source);
+        encodedSource = encodeURIComponent(source);
 
         if (source == "" || studentID == "") {
           alert("学生番号またはソースコードが入力されていません");
@@ -243,7 +247,7 @@
         // let queryString = `/submit_sourcecode?questionID=${questionID}&studentID=${studentID}&source=${source}`;
 
         let path = "/submit_sourcecode";
-        let param = `questionID=${questionID}&studentID=${studentID}&source=${source}`;
+        let param = `questionID=${questionID}&studentID=${studentID}&source=${encodedSource}`;
 
         if (confirm("提出しますか?")) {
           // await query(queryString);
@@ -252,6 +256,11 @@
           let res = `${res_data["result"]}(${res_data["responseID"]})`;
           console.log(res);
           alert(res);
+        }
+
+        //全角スペースでコンパイルエラーが出た場合、ヒントを表示
+        if (res_data["result"] == "Compile Error" && source.includes("　")) {
+          alert("ソースコードに全角スペースが含まれています。");
         }
       };
     </script>
