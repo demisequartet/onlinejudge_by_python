@@ -181,7 +181,7 @@
       const origin = location.origin;
       const path_base = location.pathname.replace(/\/[^\/]*$/, "");
       const query = async (path) => {
-        let res = await axios.get(origin + path);
+        let res = await axios.get(origin + path_base + path);
 
         res_data = res.data;
         if (flag_show_result) {
@@ -190,7 +190,7 @@
       };
 
       const queryByPOST = async (path, param) => {
-        console.log("url: " + origin + path);
+        console.log("url: " + origin + path_base + path);
         console.log({ param });
         let res = await axios.post(origin + path, param);
         res_data = res.data;
@@ -234,7 +234,7 @@
 
         // let queryString = `/submit_sourcecode?questionID=${questionID}&studentID=${studentID}&source=${source}`;
 
-        let path = "/submit_sourcecode";
+        let path = "/../submit_sourcecode";
         let param = `questionID=${questionID}&studentID=${studentID}&source=${encodedSource}`;
 
         if (confirm("提出しますか?")) {
