@@ -43,22 +43,11 @@ def getALLQuestions() -> dict:
     return dict_result
 
 
-def registerSource(student_id: int, question_id: int, result: str, source: str):
-    conn = getCon()
-    cur = conn.cursor()
-    cur.execute("INSERT INTO submit(student_id,question_id,result,source) VALUES (%s,%s,%s,%s)",
-                (student_id, question_id, result, source,))
-
-    conn.commit()  # https://www.psycopg.org/docs/connection.html?highlight=commit#connection.commit
-    cur.close()
-    conn.close()
-
-
 def getALLsubmit():
     conn = getCon()
     cur = conn.cursor(cursor_factory=DictCursor)
     cur.execute(
-        'SELECT * FROM  submit WHERE NOT (student_id = 98765432 OR student_id = 60236163)')
+        'SELECT * FROM  submit WHERE NOT (student_id = 98765432 OR student_id = 60230075)')
     submits = []
 
     for i in cur:
@@ -263,8 +252,4 @@ def crossAnalyzer():
 
 
 if __name__ == "__main__":
-    # AcceptedSourceAnalyzer()
-    # CompileErrorSourceAnalyzer()
-    # WrongAnswerAnalyzer()
-    # makeCSV()
-    crossAnalyzer()
+    ansanalyzer()
