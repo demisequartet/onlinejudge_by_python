@@ -101,14 +101,14 @@ def analyzer():
 def AcceptedSourceAnalyzer():
     submits = getALLsubmit()
 
-    acc = dict({"for": 0, "while": 0, "other": 0})
+    acc = dict({"printf1": 0, "printf3": 0, "other": 0})
 
     for submit in submits:
         if submit["result"] == "Accepted":
-            if "for" in submit["source"]:
-                acc["for"] += 1
-            elif "while" in submit["source"]:
-                acc["while"] += 1
+            if submit["source"].count("printf") == 1:
+                acc["printf1"] += 1
+            elif submit["source"].count("printf") == 3:
+                acc["printf3"] += 1
             else:
                 acc["other"] += 1
 
@@ -136,8 +136,10 @@ def WrongAnswerAnalyzer():
 
     for submit in submits:
         if submit["result"] == "Wrong Answer":
-            if "for" in submit["source"] or "while" in submit["source"]:
+            if not "Programing" in submit["source"]:
                 source.append([submit["student_id"], submit["source"]])
+
+    print(source)
 
     for i, con in enumerate(source):
         with open(f"submit/wrongans{i}.c", "w") as f:
@@ -253,3 +255,9 @@ def crossAnalyzer():
 
 if __name__ == "__main__":
     ansanalyzer()
+
+    AcceptedSourceAnalyzer()
+
+    analyzer()
+
+    CompileErrorSourceAnalyzer()
