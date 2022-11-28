@@ -39,29 +39,34 @@ def compile(FileName):
 def func():
     command = "./a.out"
 
-    try:
-        # refer https://docs.python.org/ja/3/library/subprocess.html
-        cp = subprocess.run(command, shell=False,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=2, check=True)
+    for index in range(1, 4):
 
-        stdout = cp.stdout.decode("utf-8")
-    except subprocess.TimeoutExpired:
-        # print("Time Limit Exceeded")
-        return "Time Limit Exceeded"
-    except subprocess.CalledProcessError:
-        # print("Runtime Error")
-        return "Runtime Error"
-    else:
-        return answerJudge(stdout)
+        try:
+            # refer https://docs.python.org/ja/3/library/subprocess.html
+            cp = subprocess.run(command, shell=False, stdin=open(f'input{index}.txt', "r"),
+                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=2, check=True)
+
+            stdout = cp.stdout.decode("utf-8")
+        except subprocess.TimeoutExpired:
+            # print("Time Limit Exceeded")
+            return "Time Limit Exceeded"
+        except subprocess.CalledProcessError:
+            # print("Runtime Error")
+            return "Runtime Error"
+        else:
+            if answerJudge(stdout, f'correct{index}.txt') == "Wrong Answer":
+                return "Wrong Answer"
+
+    return "Accepted"
 
 
-def answerJudge(stdout):
+def answerJudge(stdout, FileName):
     stdout = answerEndlineDeleter(stdout)
     print(stdout)
     stdout = stdout.encode("utf-8")
     submitHash = sha256(stdout).hexdigest()
 
-    ans = open("correct.txt", "r").read()
+    ans = open(FileName, "r").read()
     ans = answerEndlineDeleter(ans)
     ans = ans.encode("utf-8")
     print(ans)

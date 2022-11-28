@@ -16,22 +16,28 @@ def getCon():
 
 def outputTofile(num):
     conn = getCon()
-    cur = conn.cursor()
-    cur.execute('SELECT output from question where question_id = %s', (num,))
-    output = cur.fetchone()[0]
+    cur = conn.cursor(cursor_factory=DictCursor)
+    cur.execute(
+        'SELECT * from question where question_id = %s', (num,))
+    question = dict(cur.fetchone())
     cur.close()
     conn.close()
 
-    print(output)
+    print(question)
 
-    strToFile(output)
+    strToFile(question["output"], "correct1.txt")
+    strToFile(question["output2"], "correct2.txt")
+    strToFile(question["output3"], "correct3.txt")
+    strToFile(question["input"], "input1.txt")
+    strToFile(question["input2"], "input2.txt")
+    strToFile(question["input3"], "input3.txt")
 
 
-def strToFile(str):
-    if os.path.exists("correct.txt"):
-        os.remove("correct.txt")
+def strToFile(str, FileName):
+    if os.path.exists(FileName):
+        os.remove(FileName)
 
-    with open('correct.txt', 'w') as f:
+    with open(FileName, 'w') as f:
         f.write(str)
 
 

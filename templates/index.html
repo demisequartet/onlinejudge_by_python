@@ -104,9 +104,15 @@
         display: inline-block;
       }
 
+      .inputExample {
+        resize: none;
+        height: 100px;
+        width: 100%;
+      }
+
       .outputExample {
         resize: none;
-        height: 500px;
+        height: 350px;
         width: 100%;
       }
 
@@ -129,26 +135,42 @@
       <details>
         <summary>注意書き</summary>
         <ul>
-          <li>学生番号を正しく記入し、提出コードのところに、作成したプログラムを貼り付けてから、提出ボタンを押してください。paiza.ioを使用した場合でも、プログラムを提出コードに貼り付けてください。なお、paiza.ioを使用しなくても解答できます。</li>
-          <li>日本語文字は一切使用しないでください。とくに全角空白は、paiza.ioでは半角空白扱いですが、オンラインジャッジではコンパイルエラーになります。</li>
-          <li>「実行(Ctrl-Enter)」ボタンのすぐ下に、マウスカーソルを移動させて、上下にドラッグすると、出力欄を伸び縮みできます。</li>
-          <li>正誤判定はサーバ側で行います。学生番号・提出コード・判定結果はサーバのデータベースに保存されます。</li>
-          <li>本システムでは、英字の大小や綴りなどの間違いが1文字でもあると、不正解となります。例えば"Hello"を出力する問題で、"hello"あるいは"Helo"と出力すると、Wrong Answer（不正解）です。よく注意してください。</li>
+          <li>
+            学生番号を正しく記入し、提出コードのところに、作成したプログラムを貼り付けてから、提出ボタンを押してください。paiza.ioを使用した場合でも、プログラムを提出コードに貼り付けてください。なお、paiza.ioを使用しなくても解答できます。
+          </li>
+          <li>
+            日本語文字は一切使用しないでください。とくに全角空白は、paiza.ioでは半角空白扱いですが、オンラインジャッジではコンパイルエラーになります。
+          </li>
+          <li>
+            「実行(Ctrl-Enter)」ボタンのすぐ下に、マウスカーソルを移動させて、上下にドラッグすると、出力欄を伸び縮みできます。
+          </li>
+          <li>
+            正誤判定はサーバ側で行います。学生番号・提出コード・判定結果はサーバのデータベースに保存されます。
+          </li>
+          <li>
+            本システムでは、英字の大小や綴りなどの間違いが1文字でもあると、不正解となります。例えば"Hello"を出力する問題で、"hello"あるいは"Helo"と出力すると、Wrong
+            Answer（不正解）です。よく注意してください。
+          </li>
         </ul>
       </details>
       <details>
         <summary>提出後のメッセージについて</summary>
         <ul>
-          <li>提出後に表示されるメッセージの意味は次の通りです。
-              <ul>
-                <li>Accepted：正しく動作しました。
-                <li>Wrong Answer：正しい出力ではありませんでした。
-                <li>Compile Error：コンパイルエラーが発生しました。
-                <li>Runtime Error：実行時エラーが発生しました。
-                <li>Time Limit Exceeded：無限ループが発生しています。
-                <li>Dangerous Program：反則技を使用しないでください。
-              </ul>
-          <li>Acceptedだけが「正解」、それ以外はすべて「不正解」です。Acceptedを目指して、プログラムを完成させてください。
+          <li>
+            提出後に表示されるメッセージの意味は次の通りです。
+            <ul>
+              <li>Accepted：正しく動作しました。</li>
+              <li>Wrong Answer：正しい出力ではありませんでした。</li>
+              <li>Compile Error：コンパイルエラーが発生しました。</li>
+              <li>Runtime Error：実行時エラーが発生しました。</li>
+              <li>Time Limit Exceeded：無限ループが発生しています。</li>
+              <li>Dangerous Program：反則技を使用しないでください。</li>
+            </ul>
+          </li>
+
+          <li>
+            Acceptedだけが「正解」、それ以外はすべて「不正解」です。Acceptedを目指して、プログラムを完成させてください。
+          </li>
         </ul>
       </details>
       <div id="questionID" style="display: none">{{question.question_id}}</div>
@@ -158,15 +180,15 @@
       <h2>{{question.question_content}}</h2>
       <div class="flex">
         <div class="column output" style="width: 30%">
+          <label>入力例</label>
+          <textarea class="inputExample" cols="7" rows="7" readonly>{{question.input}}</textarea>
           <label>出力例</label>
-          <textarea class="outputExample" cols="15" rows="15" readonly>
-{{question.output}}</textarea
-          >
+          <textarea class="outputExample" cols="7" rows="7" readonly>{{question.output}}</textarea>
         </div>
         <div class="column paiza" style="width: 70%">
           <label>動作確認</label>
           <iframe
-            src="https://paiza.io/projects/e/tKXBoPbsg3J4fhq5uttehg?theme=twilight"
+            src="https://paiza.io/projects/e/SKlUEYW3t3FKZPTwaLoKSg?theme=twilight"
             height="500"
             scrolling="no"
             seamless="seamless"
