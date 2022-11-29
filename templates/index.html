@@ -127,6 +127,10 @@
         margin: -0.5em -0.5em 0;
         padding: 0.5em;
       }
+
+      #question_content {
+        font-size: 18px;
+      }
     </style>
   </head>
   <body>
@@ -177,7 +181,7 @@
       <!-- <h1>問題名</h1>
       <h1>{{question.name}}</h1> -->
       <h2>問題文</h2>
-      <h2 id="question_content">{{question.question_content | safe}}</h2>
+      <p id="question_content">{{question.question_content | safe}}</p>
       <div class="flex">
         <div class="column output" style="width: 30%">
           <label>入力例</label>
