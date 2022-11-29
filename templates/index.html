@@ -148,8 +148,8 @@
             正誤判定はサーバ側で行います。学生番号・提出コード・判定結果はサーバのデータベースに保存されます。
           </li>
           <li>
-            本システムでは、英字の大小や綴りなどの間違いが1文字でもあると、不正解となります。例えば"Hello"を出力する問題で、"hello"あるいは"Helo"と出力すると、Wrong
-            Answer（不正解）です。よく注意してください。
+            この問題は、単に出力例の通りに出力するプログラムを作成するものではありません。入力に応じて適切な出力をすることが求められます。<br />
+            そのようにプログラムが書かれていない場合には、提出してもWrong Answerとなります。
           </li>
         </ul>
       </details>
@@ -177,7 +177,7 @@
       <!-- <h1>問題名</h1>
       <h1>{{question.name}}</h1> -->
       <h2>問題文</h2>
-      <h2>{{question.question_content}}</h2>
+      <h2 id="question_content">{{question.question_content | safe}}</h2>
       <div class="flex">
         <div class="column output" style="width: 30%">
           <label>入力例</label>
