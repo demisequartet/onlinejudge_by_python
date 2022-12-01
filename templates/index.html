@@ -234,7 +234,7 @@
       const queryByPOST = async (path, param) => {
         console.log("url: " + origin + path_base + path);
         console.log({ param });
-        let res = await axios.post(origin + path, param);
+        let res = await axios.post(origin + path_base + path, param);
         res_data = res.data;
         if (flag_show_result) {
           document.getElementById("result").innerHTML = JSON.stringify(res.data);
