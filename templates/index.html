@@ -7,9 +7,11 @@
     <meta http-equiv="expires" content="0" />
     <title>情報処理ⅡAオンラインジャッジシステム</title>
     <style type="text/css">
-      .form {
-        margin: 0 auto;
+      body {
         width: 80%;
+        margin: 0 auto;
+      }
+      .form {
         display: flex;
         flex-direction: column;
       }
@@ -20,7 +22,7 @@
 
       .form input[type="text"],
       .form input[type="number"],
-      .form textarea {
+      textarea {
         width: 100%; /*親要素いっぱい広げる*/
         padding: 10px 15px; /*ボックスを大きくする*/
         font-size: 16px;
@@ -125,70 +127,69 @@
   </head>
   <body>
     <div id="result"></div>
-    <form action="" method="POST" class="form">
-      <details>
-        <summary>注意書き</summary>
-        <ul>
-          <li>
-            学生番号を正しく記入し、提出コードのところに、作成したプログラムを貼り付けてから、提出ボタンを押してください。paiza.ioを使用した場合でも、プログラムを提出コードに貼り付けてください。なお、paiza.ioを使用しなくても解答できます。
-          </li>
-          <li>
-            日本語文字は一切使用しないでください。とくに全角空白は、paiza.ioでは半角空白扱いですが、オンラインジャッジではコンパイルエラーになります。
-          </li>
-          <li>
-            「実行(Ctrl-Enter)」ボタンのすぐ下に、マウスカーソルを移動させて、上下にドラッグすると、出力欄を伸び縮みできます。
-          </li>
-          <li>
-            正誤判定はサーバ側で行います。学生番号・提出コード・判定結果はサーバのデータベースに保存されます。
-          </li>
-          <li>
-            本システムでは、英字の大小や綴りなどの間違いが1文字でもあると、不正解となります。例えば"Hello"を出力する問題で、"hello"あるいは"Helo"と出力すると、Wrong
-            Answer（不正解）です。よく注意してください。
-          </li>
-        </ul>
-      </details>
-      <details>
-        <summary>提出後のメッセージについて</summary>
-        <ul>
-          <li>
-            提出後に表示されるメッセージの意味は次の通りです。
-            <ul>
-              <li>Accepted：正しく動作しました。</li>
-              <li>Wrong Answer：正しい出力ではありませんでした。</li>
-              <li>Compile Error：コンパイルエラーが発生しました。</li>
-              <li>Runtime Error：実行時エラーが発生しました。</li>
-              <li>Time Limit Exceeded：無限ループが発生しています。</li>
-              <li>Dangerous Program：反則技を使用しないでください。</li>
-            </ul>
-          </li>
 
-          <li>
-            Acceptedだけが「正解」、それ以外はすべて「不正解」です。Acceptedを目指して、プログラムを完成させてください。
-          </li>
-        </ul>
-      </details>
-      <div id="questionID" style="display: none">{{question.question_id}}</div>
-      <!-- <h1>問題名</h1>
+    <details>
+      <summary>注意書き</summary>
+      <ul>
+        <li>
+          学生番号を正しく記入し、提出コードのところに、作成したプログラムを貼り付けてから、提出ボタンを押してください。paiza.ioを使用した場合でも、プログラムを提出コードに貼り付けてください。なお、paiza.ioを使用しなくても解答できます。
+        </li>
+        <li>
+          日本語文字は一切使用しないでください。とくに全角空白は、paiza.ioでは半角空白扱いですが、オンラインジャッジではコンパイルエラーになります。
+        </li>
+        <li>
+          「実行(Ctrl-Enter)」ボタンのすぐ下に、マウスカーソルを移動させて、上下にドラッグすると、出力欄を伸び縮みできます。
+        </li>
+        <li>
+          正誤判定はサーバ側で行います。学生番号・提出コード・判定結果はサーバのデータベースに保存されます。
+        </li>
+        <li>
+          本システムでは、英字の大小や綴りなどの間違いが1文字でもあると、不正解となります。例えば"Hello"を出力する問題で、"hello"あるいは"Helo"と出力すると、Wrong
+          Answer（不正解）です。よく注意してください。
+        </li>
+      </ul>
+    </details>
+    <details>
+      <summary>提出後のメッセージについて</summary>
+      <ul>
+        <li>
+          提出後に表示されるメッセージの意味は次の通りです。
+          <ul>
+            <li>Accepted：正しく動作しました。</li>
+            <li>Wrong Answer：正しい出力ではありませんでした。</li>
+            <li>Compile Error：コンパイルエラーが発生しました。</li>
+            <li>Runtime Error：実行時エラーが発生しました。</li>
+            <li>Time Limit Exceeded：無限ループが発生しています。</li>
+            <li>Dangerous Program：反則技を使用しないでください。</li>
+          </ul>
+        </li>
+
+        <li>
+          Acceptedだけが「正解」、それ以外はすべて「不正解」です。Acceptedを目指して、プログラムを完成させてください。
+        </li>
+      </ul>
+    </details>
+    <div id="questionID" style="display: none">{{question.question_id}}</div>
+    <!-- <h1>問題名</h1>
       <h1>{{question.name}}</h1> -->
-      <h2>問題文</h2>
-      <h2>{{question.question_content}}</h2>
-      <div class="flex">
-        <div class="column output" style="width: 30%">
-          <label>出力例</label>
-          <textarea class="outputExample" cols="15" rows="15" readonly>
-{{question.output}}</textarea
-          >
-        </div>
-        <div class="column paiza" style="width: 70%">
-          <label>動作確認</label>
-          <iframe
-            src="https://paiza.io/projects/e/tKXBoPbsg3J4fhq5uttehg?theme=twilight"
-            height="500"
-            scrolling="no"
-            seamless="seamless"
-          ></iframe>
-        </div>
+    <h2>問題文</h2>
+    <h2>{{question.question_content}}</h2>
+    <div class="flex">
+      <div class="column output" style="width: 30%">
+        <label>出力例</label>
+        <textarea class="outputExample" cols="15" rows="15" readonly>{{question.output}}</textarea>
       </div>
+      <div class="column paiza" style="width: 70%">
+        <label>動作確認</label>
+        <iframe
+          src="https://paiza.io/projects/e/tKXBoPbsg3J4fhq5uttehg?theme=twilight"
+          height="500"
+          scrolling="no"
+          seamless="seamless"
+        ></iframe>
+      </div>
+    </div>
+    <form action="" method="POST" class="form">
       <label for="studentID" class="required">学生番号</label>
       <input type="text" name="studentID" id="studentID" class="required" maxlength="9" />
       <label for="source" class="required">提出コード</label>
