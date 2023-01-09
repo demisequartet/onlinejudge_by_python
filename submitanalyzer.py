@@ -195,13 +195,20 @@ def ansanalyzer():
 
     superaccepter, notsuperaccepter = [], []
 
+    notac = []
+
     for i in res:
         if i["Accepted"] != 0:
             if i["Wrong Answer"] + i["Compile Error"] == 0:
                 superaccepter.append(i["id"])
             else:
-                notsuperaccepter.append(i["Wrong Answer"] + i["Compile Error"])
+                notsuperaccepter.append(i["id"])
+        else:
+            notac.append(i["id"])
+
     print(len(superaccepter))
+    print(len(notsuperaccepter))
+    print(len(notac))
     print(sum(notsuperaccepter)/len(notsuperaccepter))
 
 
@@ -256,8 +263,8 @@ def crossAnalyzer():
 if __name__ == "__main__":
     ansanalyzer()
 
-    AcceptedSourceAnalyzer()
+    # AcceptedSourceAnalyzer()
 
-    analyzer()
+    # analyzer()
 
-    CompileErrorSourceAnalyzer()
+    # CompileErrorSourceAnalyzer()
